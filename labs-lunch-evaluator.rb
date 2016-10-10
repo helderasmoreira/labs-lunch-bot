@@ -32,7 +32,7 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
 
   match /^list$/ do |client, data, match|
     if @data['restaurants'].size == 0
-      client.say(text: "There's no stored votings.", channel: data.channel)
+      client.say(text: "There are no stored votings.", channel: data.channel)
     else
       @data['restaurants'].each do |k,v|
         client.web_client.chat_postMessage(
