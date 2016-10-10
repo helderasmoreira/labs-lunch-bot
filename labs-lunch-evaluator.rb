@@ -62,7 +62,7 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
     if ongoing.present?
       client.say(text: "There's a valid voting taking place. Cast your vote instead.", channel: data.channel)
     else
-      @data['restaurants'][match[:name]] = { 'timestamp' => DateTime.now, 'owner' => nil, 'votes' => {} }
+      @data['restaurants'][match[:name]] = { 'timestamp' => DateTime.now.to_s, 'owner' => nil, 'votes' => {} }
       save
       client.say(text: "Creating new entry valid for #{@valid_for} minutes. Use \"set-owner <owner>\" to say who suggested it and cast your votes.", channel: data.channel)
     end
