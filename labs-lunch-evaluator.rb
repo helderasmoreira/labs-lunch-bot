@@ -3,7 +3,7 @@ require 'json'
 
 class LabsLunchEvaluator < SlackRubyBot::Bot
   @data_file_path = 'data.json'
-  @valid_for = 30
+  @valid_for = 60
 
   data_file = File.read(@data_file_path) if File.file? @data_file_path
   @data = data_file ? JSON.parse(data_file) : {}
@@ -18,7 +18,7 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
     end
 
     command 'new-vote' do
-      desc 'Start a new vote for a restaurant. The new vote will be available for 30 minutes. Usage: new-vote <name>'
+      desc "Start a new vote for a restaurant. The new vote will be available for #{@valid_for} minutes. Usage: new-vote <name>"
     end
 
     command 'set-owner' do
