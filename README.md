@@ -7,6 +7,8 @@ The idea is for one of us to open up the voting, set the owner and in the next 6
 
 We can then see list the votes and the bot will calculate the average automatically (it can be overwritten for cases where we don't have all the votes but know the average), color code it accordingly and also show everyone's votes.
 
+![alt tag](https://raw.githubusercontent.com/heldersantosmoreira/labs-lunch-evaluator/master/gif/labs-lunch-bot.gif?token=AAd8Sv3FLdS677r80wNuhwfPDMJgWVoeks5YBp4pwA%3D%3D)
+
 ## Global commands
 
 (can be used without mention)
