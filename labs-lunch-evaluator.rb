@@ -13,14 +13,16 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
 
   help do
     title 'Labs Lunch Evaluator'
-    desc 'This bot helps us classify our lunch places.'
+    desc "This bot helps us classify our lunch places."\
+     "The idea is for one of us to open up the voting and in the next 60 minutes everyone can cast their vote. "\
+     "Afterwards while listing the bot will calculate the average automatically, color code it accordingly and also show everyone's votes. "
 
     command 'list' do
       desc 'List all the restaurants we classified so far.'
     end
 
     command 'new-vote' do
-      desc "Start a new vote for a restaurant. The new vote will be available for #{@valid_for} minutes. Usage: new-vote <name>"
+      desc "Start a new vote for a restaurant. The new vote will be available for 60 minutes. Usage: new-vote <name>"
     end
 
     command 'rename' do
