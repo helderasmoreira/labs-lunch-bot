@@ -23,6 +23,10 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
       desc "Start a new vote for a restaurant. The new vote will be available for #{@valid_for} minutes. Usage: new-vote <name>"
     end
 
+    command 'rename' do
+      desc "Rename the current voting. Usage: rename <new-name>"
+    end
+
     command 'set-owner' do
       desc 'Updates the owner (the person who decided on the restaurant) for the current vote. Usage: set-owner <owner>'
     end
@@ -70,6 +74,21 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
     end
   end
 
+  match /^rename (?<name>.*)$/ do |client, data, match|
+    _ongoing = ongoing
+
+    if ongoing.nil?
+      client.say(text: "There's no ongoing voting.", channel: data.channel)
+    elsif exists?(match[:name])
+      client.say(text: "#{match[:name]} already exists. You need an unique name.", channel: data.channel)
+    else
+      @data['restaurants'][match[:name]] = @data['restaurants'][_ongoing]
+      @data['restaurants'].delete(_ongoing)
+      save
+      client.say(text: "Renamed #{_ongoing} to #{match[:name]}.", channel: data.channel)
+    end
+  end
+
   match /^set-owner (?<user>.*)$/ do |client, data, match|
     _ongoing = ongoing
 
@@ -107,6 +126,10 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
 
   def self.save
     @data_object.put(body: JSON.pretty_generate(@data))
+  end
+
+  def self.exists?(name)
+    @data['restaurants'].has_key?(name)
   end
 
   def self.ongoing
