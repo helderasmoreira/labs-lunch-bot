@@ -132,7 +132,9 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
 
     {
       title: name,
-      text: "Owned by: #{info['owner']}\nVotes:\n#{info['votes'].map { |k,v| "#{k}: #{v}"}.join("\n")}\nAverage: #{average}",
+      text: "Owned by: #{info['owner']}\n"\
+        "Votes:\n#{info['votes'].map { |k,v| "#{k}: #{v}"}.join("\n")}\n"\
+        "Average: #{average}",
       color: color
     }
   end
