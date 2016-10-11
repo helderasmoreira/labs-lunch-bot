@@ -119,10 +119,21 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
   def self.prettify(name, info)
     votes = info['votes'].map { |k, v| v }
     average = votes.inject{ |sum, el| sum + el }.to_f / votes.size
+
+    color =
+      case average
+      when 0..4
+        '#FF0000'
+      when 4..6
+        '#FF8C00'
+      when 6..9
+        '#00FF00'
+      end
+
     {
       title: name,
       text: "Owned by: #{info['owner']}\nVotes:\n#{info['votes'].map { |k,v| "#{k}: #{v}"}.join("\n")}\nAverage: #{average}",
-      color: average >= 5 ? '#00FF00' : '#FF0000'
+      color: color
     }
   end
 
