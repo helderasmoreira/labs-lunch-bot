@@ -1,12 +1,14 @@
 require 'slack-ruby-bot'
 require 'json'
+require 'aws-sdk'
 
 class LabsLunchEvaluator < SlackRubyBot::Bot
-  @data_file_path = 'data.json'
   @valid_for = 60
 
-  data_file = File.read(@data_file_path) if File.file? @data_file_path
-  @data = data_file ? JSON.parse(data_file) : {}
+  s3 = Aws::S3::Resource.new
+  @data_object = s3.bucket('labs-lunch-evaluator').object('data.json')
+
+  @data = @data_object.exists? ? JSON.parse(@data_object.get.body.string) : {}
   @data['restaurants'] ||= {}
 
   help do
@@ -104,9 +106,7 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
   end
 
   def self.save
-    File.open(@data_file_path, 'w') do |f|
-      f.puts JSON.pretty_generate(@data)
-    end
+    @data_object.put(body: JSON.pretty_generate(@data))
   end
 
   def self.ongoing
