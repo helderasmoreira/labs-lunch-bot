@@ -118,7 +118,7 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
 
   def self.prettify(name, info)
     votes = info['votes'].map { |k, v| v }
-    average = votes.inject{ |sum, el| sum + el }.to_f / votes.size
+    average = info['average'] || votes.inject{ |sum, el| sum + el }.to_f / votes.size
 
     color =
       case average
