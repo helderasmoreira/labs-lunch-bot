@@ -67,6 +67,8 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
   match /^new-vote (?<name>.*)$/ do |client, data, match|
     if ongoing.present?
       client.say(text: "There's a valid voting taking place. Cast your vote instead.", channel: data.channel)
+    elsif exists?(match[:name])
+      client.say(text: "#{match[:name]} already exists. You need an unique name.", channel: data.channel)
     else
       @data['restaurants'][match[:name]] = { 'timestamp' => DateTime.now.to_s, 'owner' => nil, 'votes' => {} }
       save
