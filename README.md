@@ -1,4 +1,4 @@
-# Labs Lunch Evaluator
+# Labs Lunch Bot
 A Slack Bot to help the Triggerise Labs team rate their weekly team lunch place.
 
 ## Usage

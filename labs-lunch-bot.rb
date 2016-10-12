@@ -2,17 +2,17 @@ require 'slack-ruby-bot'
 require 'json'
 require 'aws-sdk'
 
-class LabsLunchEvaluator < SlackRubyBot::Bot
+class LabsLunchBot < SlackRubyBot::Bot
   @valid_for = 60
 
   s3 = Aws::S3::Resource.new
-  @data_object = s3.bucket('labs-lunch-evaluator').object('data.json')
+  @data_object = s3.bucket('labs-lunch-bot').object('data.json')
 
   @data = @data_object.exists? ? JSON.parse(@data_object.get.body.string) : {}
   @data['restaurants'] ||= {}
 
   help do
-    title 'Labs Lunch Evaluator'
+    title 'Labs Lunch Bot'
     desc "This bot helps us classify our lunch places. "\
      "The idea is for one of us to open up the voting and in the next 60 minutes everyone can cast their vote. "\
      "Afterwards while listing the bot will calculate the average automatically, color code it accordingly and also show everyone's votes. "
@@ -158,4 +158,4 @@ class LabsLunchEvaluator < SlackRubyBot::Bot
   end
 end
 
-LabsLunchEvaluator.run
+LabsLunchBot.run

@@ -1,1 +1,1 @@
-worker: bundle exec ruby labs-lunch-evaluator.rb
+worker: bundle exec ruby labs-lunch-bot.rb
