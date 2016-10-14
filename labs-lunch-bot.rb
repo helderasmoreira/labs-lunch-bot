@@ -135,8 +135,8 @@ class LabsLunchBot < SlackRubyBot::Bot
     {
       title: name,
       text: "Owned by: #{info['owner']}\n"\
-        "Votes:\n#{info['votes'].map { |k,v| "#{k}: #{v}"}.join("\n")}\n"\
-        "Average: #{average}",
+        "Average: #{average}\n"\
+        "Votes:\n#{info['votes'].map { |k,v| "#{k}: #{v}"}.join("\n")}",
       color: color
     }
   end
