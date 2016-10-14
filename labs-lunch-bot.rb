@@ -18,7 +18,11 @@ class LabsLunchBot < SlackRubyBot::Bot
      "Afterwards while listing the bot will calculate the average automatically, color code it accordingly and also show everyone's votes. "
 
     command 'list' do
-      desc 'List all the restaurants we classified so far.'
+      desc 'List all the restaurants we classified so far, ordered by timestamp.'
+    end
+
+    command 'rank' do
+      desc 'List all the restaurants we classified so far, ordered by descending vote average .'
     end
 
     command 'new-vote' do
@@ -43,6 +47,25 @@ class LabsLunchBot < SlackRubyBot::Bot
       client.say(text: "There are no stored votings.", channel: data.channel)
     else
       @data['restaurants'].each do |k,v|
+        client.web_client.chat_postMessage(
+          channel: data.channel,
+          as_user: true,
+          attachments: [prettify(k, v)]
+        )
+      end
+    end
+  end
+
+  match /^rank$/i do |client, data, match|
+    if @data['restaurants'].size == 0
+      client.say(text: "There are no stored votings.", channel: data.channel)
+    else
+      @data['restaurants'].each do |name, data|
+        votes = data['votes'].values
+        data['average'] ||= (votes.inject{ |sum, el| sum + el }.to_f / votes.size)
+      end
+
+      @data['restaurants'].sort_by { |r| r[1]['average'] }.reverse.each do |k,v|
         client.web_client.chat_postMessage(
           channel: data.channel,
           as_user: true,
