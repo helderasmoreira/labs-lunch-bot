@@ -38,7 +38,7 @@ class LabsLunchBot < SlackRubyBot::Bot
     end
   end
 
-  match /^list$/ do |client, data, match|
+  match /^list$/i do |client, data, match|
     if @data['restaurants'].size == 0
       client.say(text: "There are no stored votings.", channel: data.channel)
     else
@@ -52,7 +52,7 @@ class LabsLunchBot < SlackRubyBot::Bot
     end
   end
 
-  match /^current$/ do |client, data, match|
+  match /^current$/i do |client, data, match|
     _ongoing = ongoing
 
     if _ongoing.present?
@@ -66,7 +66,7 @@ class LabsLunchBot < SlackRubyBot::Bot
     end
   end
 
-  match /^new-vote (?<name>.*)$/ do |client, data, match|
+  match /^new-vote (?<name>.*)$/i do |client, data, match|
     if ongoing.present?
       client.say(text: "There's a valid voting taking place. Cast your vote instead.", channel: data.channel)
     elsif exists?(match[:name])
@@ -78,7 +78,7 @@ class LabsLunchBot < SlackRubyBot::Bot
     end
   end
 
-  match /^rename (?<name>.*)$/ do |client, data, match|
+  match /^rename (?<name>.*)$/i do |client, data, match|
     _ongoing = ongoing
 
     if ongoing.nil?
@@ -93,7 +93,7 @@ class LabsLunchBot < SlackRubyBot::Bot
     end
   end
 
-  match /^set-owner (?<user>.*)$/ do |client, data, match|
+  match /^set-owner (?<user>.*)$/i do |client, data, match|
     _ongoing = ongoing
 
     if _ongoing.nil?
@@ -105,7 +105,7 @@ class LabsLunchBot < SlackRubyBot::Bot
     end
   end
 
-  match /^vote (?<number>\d)$/ do |client, data, match|
+  match /^vote (?<number>\d)$/i do |client, data, match|
     _ongoing = ongoing
 
     if _ongoing.nil?
