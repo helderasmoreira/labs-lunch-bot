@@ -36,7 +36,6 @@ We can then see list the votes and the bot will calculate the average automatica
 ## Future ideas
 
 - Specific user stats: his average vote, maximum, minimum, etc;
-- Allow ordering by date or average ranking in the `list` command;
 - Some rake tasks to make modifying the data file easier;
   - Export file
   - Delete entry
