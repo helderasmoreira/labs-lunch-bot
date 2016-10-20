@@ -79,11 +79,10 @@ class LabsLunchBot < SlackRubyBot::Bot
     _ongoing = ongoing
 
     if _ongoing.present?
-      client.web_client.chat_postMessage(
-        channel: data.channel,
-        as_user: true,
-        attachments: [prettify(_ongoing, @data['restaurants'][_ongoing])]
-      )
+      restaurant = @data['restaurants'][_ongoing]
+      remaining = @valid_for - minutes_elapsed(DateTime.parse(restaurant['timestamp']))
+      nr_votes = restaurant['votes'].size
+      client.say(text: "Ongoing voting for: #{_ongoing}. Remaining time: #{remaining} minutes. Votes so far: #{nr_votes}.", channel: data.channel)
     else
       client.say(text: "There's no ongoing voting.", channel: data.channel)
     end
@@ -188,7 +187,11 @@ class LabsLunchBot < SlackRubyBot::Bot
   end
 
   def self.valid?(datetime)
-    ((DateTime.now - datetime) * 24 * 60).to_i < @valid_for
+    minutes_elapsed(datetime) < @valid_for
+  end
+
+  def self.minutes_elapsed(datetime)
+    ((DateTime.now - datetime) * 24 * 60).to_i
   end
 end
 
