@@ -3,7 +3,7 @@ require 'json'
 require 'aws-sdk'
 
 class LabsLunchBot < SlackRubyBot::Bot
-  @valid_for = 60
+  @valid_for = 30
 
   s3 = Aws::S3::Resource.new
   @data_object = s3.bucket('labs-lunch-bot').object('data.json')
@@ -47,10 +47,12 @@ class LabsLunchBot < SlackRubyBot::Bot
   end
 
   match /^list$/i do |client, data, match|
-    if @data['restaurants'].size == 0
+    _listable = listable
+
+    if _listable.size == 0
       client.say(text: "There are no stored votings.", channel: data.channel)
     else
-      @data['restaurants'].each do |k,v|
+      _listable.each do |k,v|
         client.web_client.chat_postMessage(
           channel: data.channel,
           as_user: true,
@@ -61,15 +63,17 @@ class LabsLunchBot < SlackRubyBot::Bot
   end
 
   match /^rank$/i do |client, data, match|
-    if @data['restaurants'].size == 0
+    _listable = listable
+
+    if _listable.size == 0
       client.say(text: "There are no stored votings.", channel: data.channel)
     else
-      @data['restaurants'].each do |name, data|
+      _listable.each do |name, data|
         votes = data['votes'].values
         data['average'] ||= (votes.inject{ |sum, el| sum + el }.to_f / votes.size)
       end
 
-      @data['restaurants'].sort_by { |r| r[1]['average'] }.reverse.each do |k,v|
+      _listable.sort_by { |r| r[1]['average'] }.reverse.each do |k,v|
         client.web_client.chat_postMessage(
           channel: data.channel,
           as_user: true,
@@ -196,6 +200,10 @@ class LabsLunchBot < SlackRubyBot::Bot
 
   def self.minutes_elapsed(datetime)
     ((DateTime.now - datetime) * 24 * 60).to_i
+  end
+
+  def self.listable
+    @data['restaurants'].reject { |k,v| valid? DateTime.parse(v['timestamp']) }
   end
 end
 
