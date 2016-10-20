@@ -18,11 +18,11 @@ class LabsLunchBot < SlackRubyBot::Bot
      "Afterwards while listing the bot will calculate the average automatically, color code it accordingly and also show everyone's votes. "
 
     command 'list' do
-      desc 'List all the restaurants we classified so far, ordered by timestamp.'
+      desc 'List all the restaurants we classified so far (ignoring any ongoing votings), ordered by timestamp.'
     end
 
     command 'rank' do
-      desc 'List all the restaurants we classified so far, ordered by descending vote average .'
+      desc 'List all the restaurants we classified so far (ignoring any ongoing votings), ordered by descending vote average .'
     end
 
     command 'new-vote' do

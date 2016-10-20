@@ -13,9 +13,9 @@ We can then see list the votes and the bot will calculate the average automatica
 
 (can be used without mention)
 
-`list` - List all the restaurants we classified so far by, ordered by timestamp.
+`list` - List all the restaurants we classified so far by (ignoring any ongoing votings), ordered by timestamp.
 
-`rank` - List all the restaurants we classified so far, ordered by descending vote average.
+`rank` - List all the restaurants we classified so far (ignoring any ongoing votings), ordered by descending vote average.
 
 `new-vote` - Start a new vote for a restaurant. The new vote will be available for  minutes. Usage: `new-vote <name>`
 
