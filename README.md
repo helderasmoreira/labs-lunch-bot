@@ -23,6 +23,8 @@ We can then see list the votes and the bot will calculate the average automatica
 
 `set-owner` - Updates the owner (the person who decided on the restaurant) for the current vote. Usage: `set-owner <owner>`
 
+`current` - Shows the current voting going on, if any. Also displays the current time remaining in minutes and number of votes so far. Usage: `current`
+
 `vote` - Cast your vote for the current vote. If you do it multiple times within the time the voting is open, your vote will be overwritten. Usage: `vote <digit>`
 
 ## Other commands

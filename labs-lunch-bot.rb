@@ -37,6 +37,10 @@ class LabsLunchBot < SlackRubyBot::Bot
       desc 'Updates the owner (the person who decided on the restaurant) for the current vote. Usage: set-owner <owner>'
     end
 
+    command 'current' do
+      desc 'Shows the current voting going on, if any. Also displays the current time remaining in minutes and number of votes so far. Usage: current'
+    end
+
     command 'vote' do
       desc 'Cast your vote for the current vote. If you do it multiple times within the time the voting is open, your vote will be overwritten. Usage: vote <digit>'
     end
