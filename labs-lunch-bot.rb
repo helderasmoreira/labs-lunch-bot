@@ -141,6 +141,17 @@ class LabsLunchBot < SlackRubyBot::Bot
     end
   end
 
+  # missing from help on purpose :->
+  match /^delete (?<name>.*)$/i do |client, data, match|
+    if exists?(match[:name])
+      @data['restaurants'].delete(match[:name])
+      save
+      client.say(text: "Deleted #{match[:name]}.", channel: data.channel)
+    else
+      client.say(text: "#{match[:name]} not found.", channel: data.channel)
+    end
+  end
+
   def self.prettify(name, info)
     votes = info['votes'].map { |k, v| v }
     average = (info['average'] || votes.inject{ |sum, el| sum + el }.to_f / votes.size).round(1)
