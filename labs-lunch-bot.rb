@@ -88,9 +88,14 @@ class LabsLunchBot < SlackRubyBot::Bot
 
     if _ongoing.present?
       restaurant = @data['restaurants'][_ongoing]
+      owner = restaurant['owner']
       remaining = @valid_for - minutes_elapsed(DateTime.parse(restaurant['timestamp']))
       nr_votes = restaurant['votes'].size
-      client.say(text: "Ongoing voting for: #{_ongoing}. Remaining time: #{remaining} minutes. Votes so far: #{nr_votes}.", channel: data.channel)
+      client.say(text:
+        "Ongoing voting for: #{_ongoing} (#{owner})\n"\
+        "Remaining time: #{remaining} minutes\n"\
+        "Votes so far: #{nr_votes}",
+        channel: data.channel)
     else
       client.say(text: "There's no ongoing voting.", channel: data.channel)
     end
