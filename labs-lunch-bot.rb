@@ -14,7 +14,7 @@ class LabsLunchBot < SlackRubyBot::Bot
   help do
     title 'Labs Lunch Bot'
     desc "This bot helps us classify our lunch places. "\
-     "The idea is for one of us to open up the voting and in the next 60 minutes everyone can cast their vote. "\
+     "The idea is for one of us to open up the voting and then everyone can cast their vote. "\
      "Afterwards while listing the bot will calculate the average automatically, color code it accordingly and also show everyone's votes. "
 
     command 'list' do
